@@ -5,15 +5,19 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "musicas")
 public class Musica {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
     private String nomeDaMusica;
-
     @ManyToOne
     private Artista artistas;
+
+    public Musica(String nomeDaMusica) {
+        this.nomeDaMusica = nomeDaMusica;
+    }
+    public Musica() {}
 
     public void setId(Long id) {
         this.id = id;
@@ -41,10 +45,8 @@ public class Musica {
 
     @Override
     public String toString() {
-        return "Musica{" +
-                "id=" + id +
-                ", nomeDaMusica='" + nomeDaMusica + '\'' +
-                ", artistas=" + artistas +
-                '}';
+        return "Nome da música: " + nomeDaMusica + "\n" +
+                "Nome do artista: " + artistas.getNomeDoArtista() + "\n" +
+                "*********************************************************\n";
     }
 }

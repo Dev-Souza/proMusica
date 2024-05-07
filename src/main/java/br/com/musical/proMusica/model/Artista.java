@@ -2,6 +2,7 @@ package br.com.musical.proMusica.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,10 +16,12 @@ public class Artista {
     @Enumerated(EnumType.STRING)
     private TipoArtista tipoArtista;
     @OneToMany(mappedBy = "artistas", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Musica> musicas;
+    private List<Musica> musicas = new ArrayList<>();
 
-    public Artista() {
-
+    public Artista() {}
+    public Artista(String nomeDoArtista, TipoArtista tipoArtista) {
+        this.nomeDoArtista = nomeDoArtista;
+        this.tipoArtista = tipoArtista;
     }
 
     public void setId(Long id) {
@@ -50,17 +53,12 @@ public class Artista {
     }
 
     public void setMusicas(List<Musica> musicas) {
-        musicas.forEach(m -> m.setArtistas(this));
         this.musicas = musicas;
     }
 
     @Override
     public String toString() {
-        return "Artista{" +
-                "id=" + id +
-                ", nomeDoArtista='" + nomeDoArtista + '\'' +
-                ", tipoArtista=" + tipoArtista +
-                ", musicas=" + musicas +
-                '}';
+        return "nomeDoArtista='" + nomeDoArtista + '\'' +
+                ", tipoArtista=" + tipoArtista;
     }
 }
