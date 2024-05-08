@@ -104,7 +104,11 @@ public class Principal {
     // Função para se Listar todas
     private void listarMusicas() {
         List<Artista> listaDeMusicas = repositorio.findAll();
-        listaDeMusicas.forEach(m -> m.getMusicas().forEach(System.out::println));
+        listaDeMusicas.forEach(m -> m.getMusicas().forEach(musica -> {
+            System.out.println("Nome da música: " + musica.getNomeDaMusica());
+            System.out.println("Artista: " + musica.getArtistas().getNomeDoArtista());
+            System.out.println("-----------------------------------------------------\n");
+        }));
     }
 
     //Função para listar todos os artistas
@@ -125,5 +129,13 @@ public class Principal {
     }
 
     private void buscarMusicasPorArtistas() {
+        System.out.println("Qual o nome do artista: ");
+        var nomeArtista = leitura.nextLine();
+
+        List<Musica> musicasListadas = repositorio.getMusicasPerArtistas(nomeArtista);
+        // ml -> de músicasListadas
+        var nome = repositorio.findByNomeDoArtistaContainingIgnoreCase(nomeArtista);
+        System.out.println("Musicas de " + nome.get().getNomeDoArtista());
+        musicasListadas.forEach(ml -> System.out.println(ml.getNomeDaMusica()));
     }
 }
